@@ -1,0 +1,19 @@
+.login-image-col {
+  background-image: url("../../images/logo.png");
+
+  height: 100vh;
+
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.btn-wal {
+  background: #4da484;
+  color: #fff;
+}
+
+.btn-wal:hover {
+  background-color: #4db580;
+  color: #fff;
+}
