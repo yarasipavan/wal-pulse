@@ -4,10 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../slices/loginSlice";
-
 import Accordion from "react-bootstrap/Accordion";
 
-function AllConcerns({ type }) {
+function GetResourceRequests() {
   let navigate = useNavigate();
   let dispatch = useDispatch();
 
@@ -15,7 +14,7 @@ function AllConcerns({ type }) {
   let { user } = useSelector((store) => store.login);
 
   //state
-  let [concerns, setConcerns] = useState([]);
+  let [requests, setRequests] = useState([]);
   let [fetched, setFetched] = useState(0);
   let [errorMessage, setErrorMessage] = useState("");
 
@@ -27,14 +26,14 @@ function AllConcerns({ type }) {
       navigate("/");
     }
 
-    //get concerns
+    //get requests
     try {
       axios
-        .get(`http://localhost:4000/${type}/project-concerns`, {
+        .get(`http://localhost:4000/admin-user/resource-requests`, {
           headers: { Authorization: `Bearer ${token}` },
         })
         .then((res) => {
-          setConcerns(res.data.payload);
+          setRequests(res.data.payload);
           setFetched(1);
           setErrorMessage("");
         });
@@ -54,7 +53,7 @@ function AllConcerns({ type }) {
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
         <Accordion.Header>
-          <h4>All Concerns</h4>
+          <h4>All Resource Requests</h4>
         </Accordion.Header>
         <Accordion.Body>
           {!fetched && (
@@ -65,40 +64,32 @@ function AllConcerns({ type }) {
             </div>
           )}
           {errorMessage && <p>{errorMessage}</p>}
-          {fetched && !errorMessage && concerns.length === 0 ? (
-            <p className="text-center text-danger fw-bold">No Concerns </p>
+          {fetched && !errorMessage && requests.length === 0 ? (
+            <p className="text-center text-danger fw-bold">
+              No resource requests{" "}
+            </p>
           ) : (
             <Table responsive="sm" striped hover className="text-center">
               <thead style={{ fontSize: "0.9rem" }}>
                 <tr>
-                  <th>Concern Id</th>
+                  <th>Request Id</th>
                   <th>Project Id</th>
                   <th>Project Name</th>
-                  <th>Project manager</th>
-                  <th>Concern Description</th>
-                  <th>Severity</th>
-                  <th>Status</th>
-                  <th>Raised On</th>
-                  <th>Mitigated On</th>
+                  <th>Project GDO</th>
+                  <th>Request Description</th>
+                  <th>Requested On </th>
                 </tr>
               </thead>
               <tbody style={{ fontSize: "0.9rem" }}>
-                {concerns.map((concernObj) => (
-                  <tr key={concernObj.id}>
-                    <td>{concernObj.id}</td>
-                    <td>{concernObj.project.project_id}</td>
-                    <td>{concernObj.project.project_name}</td>
-                    <td>{concernObj.project.project_manager_id}</td>
-                    <td>{concernObj.concern_description}</td>
-                    <td>{concernObj.severity}</td>
-                    <td>{concernObj.status}</td>
+                {requests.map((requestObj) => (
+                  <tr key={requestObj.request_id}>
+                    <td>{requestObj.request_id}</td>
+                    <td>{requestObj.project_id}</td>
+                    <td>{requestObj.project.project_name}</td>
+                    <td>{requestObj.project.gdo_head_id}</td>
+                    <td>{requestObj.request_description}</td>
 
-                    <td>{concernObj.concern_raised_on.split("T")[0]}</td>
-                    <td>
-                      {concernObj.mitigated_on
-                        ? concernObj.mitigated_on.split("T")[0]
-                        : "-"}
-                    </td>
+                    <td>{requestObj.request_on.split("T")[0]}</td>
                   </tr>
                 ))}
               </tbody>
@@ -110,4 +101,4 @@ function AllConcerns({ type }) {
   );
 }
 
-export default AllConcerns;
+export default GetResourceRequests;

@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../slices/loginSlice";
+import Accordion from "react-bootstrap/Accordion";
 
 function AllProjects({ type }) {
   let navigate = useNavigate();
@@ -49,59 +50,78 @@ function AllProjects({ type }) {
     }
   }, []);
   return (
-    <div>
-      <h3>Projects Portfolio</h3>
-      {!fetched && (
-        <div className="d-flex justify-content-center">
-          <div className="spinner-grow text-success" role="status">
-            <span className="sr-only">Loading...</span>
-          </div>
-        </div>
-      )}
-      {errorMessage && <p>{errorMessage}</p>}
-      {fetched && !errorMessage && projects.length === 0 ? (
-        <p>No Projects</p>
-      ) : (
-        <Table responsive="sm" striped hover>
-          <thead style={{ fontSize: "0.9rem" }}>
-            <tr>
-              <th>Project Id</th>
-              <th>Project Name</th>
-              <th>Client</th>
-              <th>Account Manager</th>
-              <th>Project Maganer</th>
-              <th>Fitness</th>
-              <th>Status</th>
-              <th>Start Date</th>
-              <th>End Date</th>
-            </tr>
-          </thead>
-          <tbody style={{ fontSize: "0.9rem" }}>
-            {projects.map((projectObj, index) => (
-              <tr
-                key={index}
-                onClick={() => {
-                  getDetailedView(
-                    projectObj.project_id,
-                    projectObj.project_name
-                  );
-                }}
-              >
-                <td>{projectObj.project_id}</td>
-                <td>{projectObj.project_name}</td>
-                <td>{projectObj.client_account}</td>
-                <td>{projectObj.account_manager_id}</td>
-                <td>{projectObj.project_manager_id}</td>
-                <td>{projectObj.fitness}</td>
-                <td>{projectObj.status}</td>
-                <td>{projectObj.start_date.split("T")[0]}</td>
-                <td>{projectObj.end_date?.split("T")[0]}</td>
-              </tr>
-            ))}
-          </tbody>
-        </Table>
-      )}
-    </div>
+    <Accordion defaultActiveKey="0">
+      <Accordion.Item eventKey="0">
+        <Accordion.Header>
+          <h4>Projects Portfolio</h4>
+        </Accordion.Header>
+        <Accordion.Body>
+          {!fetched && (
+            <div className="d-flex justify-content-center">
+              <div className="spinner-grow text-success" role="status">
+                <span className="sr-only">Loading...</span>
+              </div>
+            </div>
+          )}
+          {errorMessage && <p>{errorMessage}</p>}
+          {fetched && !errorMessage && projects.length === 0 ? (
+            <p>No Projects</p>
+          ) : (
+            <>
+              <p className="text-danger">
+                Click at anywhere on the project details to get detailed view of
+                particular project
+              </p>
+              <Table responsive="sm" striped hover className="text-center">
+                <thead style={{ fontSize: "0.9rem" }}>
+                  <tr>
+                    <th>Project Id</th>
+                    <th>Project Name</th>
+                    <th>Client</th>
+                    <th>Account Manager</th>
+                    <th>GDO Head</th>
+                    <th>Project Maganer</th>
+                    <th>Fitness</th>
+                    <th>Status</th>
+                    <th>Start Date</th>
+                    <th>End Date</th>
+                  </tr>
+                </thead>
+                <tbody style={{ fontSize: "0.9rem" }}>
+                  {projects.map((projectObj, index) => (
+                    <tr
+                      key={index}
+                      onClick={() => {
+                        getDetailedView(
+                          projectObj.project_id,
+                          projectObj.project_name
+                        );
+                      }}
+                      style={{ cursor: "pointer" }}
+                    >
+                      <td>{projectObj.project_id}</td>
+                      <td>{projectObj.project_name}</td>
+                      <td>{projectObj.client_account}</td>
+                      <td>{projectObj.account_manager_id}</td>
+                      <td>{projectObj.gdo_head_id}</td>
+                      <td>{projectObj.project_manager_id}</td>
+                      <td>{projectObj.fitness}</td>
+                      <td>{projectObj.status}</td>
+                      <td>{projectObj.start_date.split("T")[0]}</td>
+                      <td>
+                        {projectObj.end_date
+                          ? projectObj.end_date.split("T")[0]
+                          : "-"}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </Table>
+            </>
+          )}
+        </Accordion.Body>
+      </Accordion.Item>
+    </Accordion>
   );
 }
 export default memo(AllProjects);

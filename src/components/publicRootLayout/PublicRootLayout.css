@@ -17,3 +17,7 @@
   background-color: #4db580;
   color: #fff;
 }
+
+table:hover {
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+}
