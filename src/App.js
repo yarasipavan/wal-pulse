@@ -16,6 +16,8 @@ import OtherUserRootLayout from "./components/otherUserRootLayout/OtherUserRootL
 
 import GdoHome from "./components/gdoHome/GdoHome";
 import DetailedView from "./components/detailedView/DetailedView";
+import ProjectManagerHome from "./components/projectManagerHome/ProjectManagerHome";
+import AdminUserHome from "./components/adminUserHome/AdminUserHome";
 
 function App() {
   const browserRouterObj = createBrowserRouter([
@@ -58,6 +60,16 @@ function App() {
     {
       path: "/project-manager",
       element: <ProjectManagerRootLayout />,
+      children: [
+        {
+          path: "",
+          element: <ProjectManagerHome />,
+        },
+        {
+          path: "detailed-view",
+          element: <DetailedView />,
+        },
+      ],
     },
     {
       path: "/super-admin",
@@ -66,6 +78,16 @@ function App() {
     {
       path: "/admin-user",
       element: <AdminUserRootLayout />,
+      children: [
+        {
+          path: "",
+          element: <AdminUserHome />,
+        },
+        {
+          path: "detailed-view",
+          element: <DetailedView />,
+        },
+      ],
     },
     {
       path: "/user",

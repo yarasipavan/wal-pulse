@@ -6,7 +6,7 @@ function GdoRootLayout() {
   return (
     <div>
       <TopNavbar />
-      <div className="container mt-5 m-0">
+      <div className="container m-0">
         <div className=" row" style={{ width: "100vw" }}>
           <Outlet />
         </div>

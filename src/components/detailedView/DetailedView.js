@@ -14,14 +14,14 @@ import ProjectConcerns from "../projectConcerns/ProjectConcerns";
 function DetailedView() {
   let { state } = useLocation();
   let navigate = useNavigate();
+  let dispatch = useDispatch();
+
   let token = localStorage.getItem("token");
-  console.log(state);
+
   //state
   let [detailedView, setDetailedView] = useState(0);
   let [errorMessage, setErrorMessage] = useState("");
   let [bg, setBg] = useState("");
-  console.log(detailedView);
-  let dispatch = useDispatch();
 
   //if this component is directly accessed then send back to home page
   useEffect(() => {
@@ -29,8 +29,6 @@ function DetailedView() {
       navigate("/gdo");
     }
   }, []);
-
-  //color styles
 
   // get detailed view
   useEffect(() => {
@@ -50,8 +48,8 @@ function DetailedView() {
         bg =
           res.data.payload.fitness === "green"
             ? setBg("green")
-            : res.data.payload.fitness === setBg("amber")
-            ? "#ffbf00"
+            : res.data.payload.fitness === "amber"
+            ? setBg("#ffbf00")
             : setBg("#ff0000");
       })
       .catch((err) => {
@@ -75,10 +73,10 @@ function DetailedView() {
       {errorMessage ? (
         <p className="text-danger fw-bold text-center">{errorMessage}</p>
       ) : (
-        <div className="container">
+        <div className="row w-100 m-0">
           {/* top indicators */}
-          <div className="row mx-auto">
-            <div className="col-12 col-md-4 col-lg-3 mx-auto mb-3 h-100">
+          <div className="row mx-auto ">
+            <div className="col-12 col-md-4 col-lg-3 mx-auto mb-3 ">
               <div className="card">
                 <div className="card-header">Fitness</div>
                 <div className="card-body" style={{}}>
@@ -95,7 +93,7 @@ function DetailedView() {
               </div>
             </div>
 
-            <div className="col-12 col-md-4 col-lg-3 mx-auto mb-3 h-100">
+            <div className="col-12 col-md-4 col-lg-3 mx-auto mb-3 ">
               <div className="card">
                 <div className="card-header">Concerns</div>
                 <div className="card-body d-flex justify-content-between">
@@ -107,7 +105,7 @@ function DetailedView() {
               </div>
             </div>
 
-            <div className="col-12 col-md-4 col-lg-3 mx-auto mb-3 h-100">
+            <div className="col-12 col-md-4 col-lg-3 mx-auto mb-3 ">
               <div className="card">
                 <div className="card-header">Team Count</div>
 
