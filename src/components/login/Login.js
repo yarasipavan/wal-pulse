@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { userLogin } from "../../slices/loginSlice";
+import { ToastContainer, toast } from "react-toastify";
 
 function Login() {
   let { status, errorMessage, user } = useSelector((store) => store.login);
@@ -23,6 +24,13 @@ function Login() {
     }
   }, [status]);
 
+  const notifyDanger = (msg) => {
+    toast.error(msg);
+  };
+  const notifySuccess = (msg) => {
+    toast.success(msg);
+  };
+
   let dispatch = useDispatch();
   let {
     register,
@@ -37,6 +45,7 @@ function Login() {
   };
   return (
     <div>
+      <ToastContainer />
       <h4>Login to portal</h4>
       <form className="mt-3" onSubmit={handleSubmit(onSubmit)}>
         <div className="mb-3">
@@ -87,7 +96,7 @@ function Login() {
           </Link>
         </div>
         <div className="mb-3 text-danger text-center fw-bold">
-          {errorMessage}
+          {errorMessage ? notifyDanger(errorMessage) : ""}
         </div>
       </form>
     </div>

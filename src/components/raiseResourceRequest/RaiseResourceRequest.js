@@ -5,11 +5,10 @@ import { logout } from "../../slices/loginSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function RaiseResourceRequest({ type }) {
+function RaiseResourceRequest({ type, projects }) {
   let dispatch = useDispatch();
   let navigate = useNavigate();
   let token = localStorage.getItem("token");
-  let [projects, setProjects] = useState([]);
   let [errorMessage, setErrorMessage] = useState("");
   let [message, setMessage] = useState("");
 
@@ -34,7 +33,7 @@ function RaiseResourceRequest({ type }) {
           headers: { Authorization: `Bearer ${token}` },
         }
       );
-      console.log("res is ", res);
+
       setMessage(res.data.message);
       setErrorMessage("");
       reset();
@@ -44,30 +43,11 @@ function RaiseResourceRequest({ type }) {
         dispatch(logout());
         navigate("/");
       } else {
-        console.log(err);
-        setErrorMessage(err.message);
+        setErrorMessage(err.response?.data?.alertMsg || err.message);
         setMessage("");
       }
     }
   };
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/${type}/project-portfolio`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        setProjects(res.data.payload);
-        setErrorMessage("");
-      })
-      .catch((err) => {
-        //set error message
-        console.log("error", err);
-
-        setErrorMessage(err.message);
-      });
-  }, []);
-  console.log("projects in ", projects);
 
   return (
     <div className=" mx-auto border rounded pt-3">

@@ -1,22 +1,19 @@
 import React, { useState, useEffect, memo } from "react";
 import axios from "axios";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
-import { logout } from "../../slices/loginSlice";
+
 import Accordion from "react-bootstrap/Accordion";
 
-function AllProjects({ type }) {
+function AllProjects({ type, projects }) {
   let navigate = useNavigate();
-  let dispatch = useDispatch();
 
   //state from store
   let { user } = useSelector((store) => store.login);
 
   //state
-  let [projects, setProjects] = useState([]);
-  let [fetched, setFetched] = useState(0);
-  let [errorMessage, setErrorMessage] = useState("");
+  // var [projects, setProjects] = useState([]);
 
   const getDetailedView = (project_id, project_name) => {
     navigate(`detailed-view?project_name=${project_name}`, {
@@ -24,31 +21,31 @@ function AllProjects({ type }) {
     });
   };
 
-  useEffect(() => {
-    let token = localStorage.getItem("token");
-    if (!user.user_type) {
-      //logout completely
-      dispatch(logout());
-      navigate("/");
-    }
+  // useEffect(() => {
+  //   let token = localStorage.getItem("token");
+  //   if (!user.user_type) {
+  //     //logout completely
+  //     dispatch(logout());
+  //     navigate("/");
+  //   }
 
-    //get projects
-    try {
-      axios
-        .get(`http://localhost:4000/${type}/project-portfolio`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          setProjects(res.data.payload);
-          setFetched(1);
-          setErrorMessage("");
-        });
-    } catch (err) {
-      //set error message
-      setErrorMessage(err.message);
-      setFetched(1);
-    }
-  }, []);
+  //   //get projects
+  //   try {
+  //     axios
+  //       .get(`http://localhost:4000/${type}/project-portfolio`, {
+  //         headers: { Authorization: `Bearer ${token}` },
+  //       })
+  //       .then((res) => {
+  //         setProjects(res.data.payload);
+  //         setFetched(1);
+  //         setErrorMessage("");
+  //       });
+  //   } catch (err) {
+  //     //set error message
+  //     setErrorMessage(err.message);
+  //     setFetched(1);
+  //   }
+  // }, []);
   return (
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -56,15 +53,7 @@ function AllProjects({ type }) {
           <h4>Projects Portfolio</h4>
         </Accordion.Header>
         <Accordion.Body>
-          {!fetched && (
-            <div className="d-flex justify-content-center">
-              <div className="spinner-grow text-success" role="status">
-                <span className="sr-only">Loading...</span>
-              </div>
-            </div>
-          )}
-          {errorMessage && <p>{errorMessage}</p>}
-          {fetched && !errorMessage && projects.length === 0 ? (
+          {projects.length === 0 ? (
             <p>No Projects</p>
           ) : (
             <>
