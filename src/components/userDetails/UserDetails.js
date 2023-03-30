@@ -26,6 +26,13 @@ function UserDetails({ users, getAllUsers }) {
   //modal state
   let [showModal, setShowModal] = useState(0);
 
+  const openModel = () => {
+    setShowModal(1);
+  };
+  const closeModel = () => {
+    setShowModal(0);
+  };
+
   const editUser = (userObj) => {
     openModel();
     setValue("emp_id", userObj.emp_id);
@@ -33,12 +40,6 @@ function UserDetails({ users, getAllUsers }) {
     setValue("email", userObj.email);
     setValue("status", userObj.status);
     setValue("user_type", userObj.user_type);
-  };
-  const openModel = () => {
-    setShowModal(1);
-  };
-  const closeModel = () => {
-    setShowModal(0);
   };
 
   //update user
