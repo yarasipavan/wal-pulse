@@ -32,7 +32,7 @@ function AdminUserHome() {
   let dispatch = useDispatch();
 
   //get gdos
-  useEffect(() => {
+  const getGdos = () => {
     if (!user.user_type) {
       //logout completely
       dispatch(logout());
@@ -60,10 +60,10 @@ function AdminUserHome() {
         setGdosFetched(1);
       }
     }
-  }, []);
+  };
 
   //get project managers
-  useEffect(() => {
+  const getProjectManagers = () => {
     if (!user.user_type) {
       //logout completely
       dispatch(logout());
@@ -91,10 +91,10 @@ function AdminUserHome() {
         setManagersFetched(1);
       }
     }
-  }, []);
+  };
 
   //get employees to set account manager
-  useEffect(() => {
+  const getEmployees = () => {
     if (!user.user_type) {
       //logout completely
       dispatch(logout());
@@ -122,10 +122,10 @@ function AdminUserHome() {
         setEmployees(1);
       }
     }
-  }, []);
+  };
 
   //get projects
-  useEffect(() => {
+  const getProjects = () => {
     if (token === null) {
       //logout completely
       dispatch(logout());
@@ -147,6 +147,13 @@ function AdminUserHome() {
           setProjectsFetched(1);
         });
     }
+  };
+
+  useEffect(() => {
+    getGdos();
+    getProjectManagers();
+    getEmployees();
+    getProjects();
   }, []);
   return (
     <div>
@@ -171,7 +178,14 @@ function AdminUserHome() {
           />
           <div className="row mt-5">
             <div className=" col-12 mx-auto">
-              <AllProjects type={"admin-user"} projects={projects} />
+              <AllProjects
+                type={"admin-user"}
+                projects={projects}
+                gdoHeads={gdoHeads}
+                projectManagers={projectManagers}
+                employees={employees}
+                getProjects={getProjects}
+              />
             </div>
           </div>
           <div className="row mt-5">

@@ -28,7 +28,7 @@ function AddProject({ type, gdoHeads, projectManagers, employees }) {
 
   // on Submit handler
   const onSubmit = async (formObj) => {
-    //if enddate is numm remove from form obj
+    //if enddate is null remove from form obj
     if (!formObj.end_date) {
       delete formObj.end_date;
     }
