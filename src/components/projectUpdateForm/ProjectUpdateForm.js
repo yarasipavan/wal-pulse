@@ -5,12 +5,11 @@ import { logout } from "../../slices/loginSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
-function ProjectUpdateForm({ type }) {
+function ProjectUpdateForm({ type, projects }) {
   let dispatch = useDispatch();
   let navigate = useNavigate();
   let token = localStorage.getItem("token");
 
-  let [projects, setProjects] = useState([]);
   let [errorMessage, setErrorMessage] = useState("");
   let [message, setMessage] = useState("");
 
@@ -30,7 +29,7 @@ function ProjectUpdateForm({ type }) {
     //call the api
     try {
       let res = await axios.post(
-        `http://localhost:4000/project-manager/project-update/project_id/${formObj.project_id}`,
+        `http://localhost:4000/${type}/project-update/project_id/${formObj.project_id}`,
         formObj,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -46,29 +45,11 @@ function ProjectUpdateForm({ type }) {
         dispatch(logout());
         navigate("/");
       } else {
-        console.log(err);
         setErrorMessage(err.message);
         setMessage("");
       }
     }
   };
-
-  useEffect(() => {
-    axios
-      .get(`http://localhost:4000/${type}/project-portfolio`, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        setProjects(res.data.payload);
-        setErrorMessage("");
-      })
-      .catch((err) => {
-        //set error message
-        console.log("error", err);
-
-        setErrorMessage(err.message);
-      });
-  }, []);
 
   return (
     <div className=" mx-auto border rounded pt-3">

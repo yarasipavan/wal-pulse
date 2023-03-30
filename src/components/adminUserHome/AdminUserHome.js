@@ -16,12 +16,15 @@ function AdminUserHome() {
   let [projectManagers, setProjectManagers] = useState([]);
   let [gdoHeads, setGdoHeads] = useState([]);
   let [employees, setEmployees] = useState([]);
+  let [projects, setProjects] = useState([]);
 
   let [managersFetched, setManagersFetched] = useState(0);
   let [gdosFetched, setGdosFetched] = useState(0);
   let [employeesFetched, setEmployeesFetched] = useState(0);
+  let [projectsFetched, setProjectsFetched] = useState(0);
 
   let [errorMessage, setErrorMessage] = useState("");
+
   let [message, setMessage] = useState("");
 
   let token = localStorage.getItem("token");
@@ -121,9 +124,36 @@ function AdminUserHome() {
     }
   }, []);
 
+  //get projects
+  useEffect(() => {
+    if (token === null) {
+      //logout completely
+      dispatch(logout());
+      navigate("/");
+    } else {
+      axios
+        .get(`http://localhost:4000/admin-user/project-portfolio`, {
+          headers: { Authorization: `Bearer ${token}` },
+        })
+        .then((res) => {
+          setProjects(res.data.payload);
+
+          setErrorMessage("");
+          setProjectsFetched(1);
+        })
+        .catch((err) => {
+          setProjects([]);
+          setErrorMessage(err.message);
+          setProjectsFetched(1);
+        });
+    }
+  }, []);
   return (
     <div>
-      {!managersFetched && !gdoHeads && !employeesFetched ? (
+      {!managersFetched &&
+      !gdosFetched &&
+      !employeesFetched &&
+      !projectsFetched ? (
         <div className="d-flex justify-content-center">
           <div className="spinner-grow text-success" role="status">
             <span className="sr-only">Loading...</span>
@@ -141,7 +171,7 @@ function AdminUserHome() {
           />
           <div className="row mt-5">
             <div className=" col-12 mx-auto">
-              <AllProjects type={"admin-user"} />
+              <AllProjects type={"admin-user"} projects={projects} />
             </div>
           </div>
           <div className="row mt-5">

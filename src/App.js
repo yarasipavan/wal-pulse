@@ -4,20 +4,43 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import PublicRootLayout from "./components/publicRootLayout/PublicRootLayout";
 import Login from "./components/login/Login";
-import Register from "./components/register/Register";
-import ForgotPassword from "./components/forgotPassword/ForgotPassword";
-import ResetPassword from "./components/resetPassword/ResetPassword";
 
-import AdminUserRootLayout from "./components/adminUserRootLayout/AdminUserRootLayout";
-import GdoRootLayout from "./components/gdoRootLayout/GdoRootLayout";
-import ProjectManagerRootLayout from "./components/projectManagerRootLayout/ProjectManagerRootLayout";
-import SuperAdminRootLayout from "./components/superAdminRootLayout/SuperAdminRootLayout";
 import OtherUserRootLayout from "./components/otherUserRootLayout/OtherUserRootLayout";
+import SuperAdminHome from "./components/superAdminHome/SuperAdminHome";
 
-import GdoHome from "./components/gdoHome/GdoHome";
 import DetailedView from "./components/detailedView/DetailedView";
-import ProjectManagerHome from "./components/projectManagerHome/ProjectManagerHome";
-import AdminUserHome from "./components/adminUserHome/AdminUserHome";
+import AdminUserRootLayout from "./components/adminUserRootLayout/AdminUserRootLayout";
+import { lazy, Suspense } from "react";
+
+let GdoHome = lazy(() => import("./components/gdoHome/GdoHome"));
+let ProjectManagerHome = lazy(() =>
+  import("./components/projectManagerHome/ProjectManagerHome")
+);
+let AdminUserHome = lazy(() =>
+  import("./components/adminUserHome/AdminUserHome")
+);
+
+// let AdminUserRootLayout = lazy(() => {
+//   "./components/adminUserRootLayout/AdminUserRootLayout";
+// });
+
+let GdoRootLayout = lazy(() =>
+  import("./components/gdoRootLayout/GdoRootLayout")
+);
+let ProjectManagerRootLayout = lazy(() =>
+  import("./components/projectManagerRootLayout/ProjectManagerRootLayout")
+);
+let SuperAdminRootLayout = lazy(() =>
+  import("./components/superAdminRootLayout/SuperAdminRootLayout")
+);
+
+let Register = lazy(() => import("./components/register/Register"));
+let ForgotPassword = lazy(() =>
+  import("./components/forgotPassword/ForgotPassword")
+);
+let ResetPassword = lazy(() =>
+  import("./components/resetPassword/ResetPassword")
+);
 
 function App() {
   const browserRouterObj = createBrowserRouter([
@@ -31,25 +54,45 @@ function App() {
         },
         {
           path: "register",
-          element: <Register />,
+          element: (
+            <Suspense fallback="loading....">
+              <Register />
+            </Suspense>
+          ),
         },
         {
           path: "forgot-password",
-          element: <ForgotPassword />,
+          element: (
+            <Suspense fallback="loading....">
+              <ForgotPassword />
+            </Suspense>
+          ),
         },
         {
           path: "reset-password",
-          element: <ResetPassword />,
+          element: (
+            <Suspense fallback="loading....">
+              <ResetPassword />
+            </Suspense>
+          ),
         },
       ],
     },
     {
       path: "/gdo",
-      element: <GdoRootLayout />,
+      element: (
+        <Suspense fallback="loading....">
+          <GdoRootLayout />
+        </Suspense>
+      ),
       children: [
         {
           path: "",
-          element: <GdoHome />,
+          element: (
+            <Suspense fallback={"Loading..."}>
+              <GdoHome />
+            </Suspense>
+          ),
         },
         {
           path: "detailed-view",
@@ -59,11 +102,19 @@ function App() {
     },
     {
       path: "/project-manager",
-      element: <ProjectManagerRootLayout />,
+      element: (
+        <Suspense fallback="loading....">
+          <ProjectManagerRootLayout />
+        </Suspense>
+      ),
       children: [
         {
           path: "",
-          element: <ProjectManagerHome />,
+          element: (
+            <Suspense fallback="loading....">
+              <ProjectManagerHome />
+            </Suspense>
+          ),
         },
         {
           path: "detailed-view",
@@ -73,7 +124,17 @@ function App() {
     },
     {
       path: "/super-admin",
-      element: <SuperAdminRootLayout />,
+      element: (
+        <Suspense fallback="loading....">
+          <SuperAdminRootLayout />
+        </Suspense>
+      ),
+      children: [
+        {
+          path: "",
+          element: <SuperAdminHome />,
+        },
+      ],
     },
     {
       path: "/admin-user",
@@ -81,7 +142,11 @@ function App() {
       children: [
         {
           path: "",
-          element: <AdminUserHome />,
+          element: (
+            <Suspense fallback="loading....">
+              <AdminUserHome />
+            </Suspense>
+          ),
         },
         {
           path: "detailed-view",

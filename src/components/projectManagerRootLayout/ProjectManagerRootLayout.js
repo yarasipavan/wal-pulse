@@ -8,7 +8,7 @@ function ProjectManagerRootLayout() {
       <div>
         <TopNavbar />
 
-        <div className="row w-100 m-0 mt-5 p-0   ">
+        <div className=" container    mt-5   ">
           <Outlet />
         </div>
       </div>
