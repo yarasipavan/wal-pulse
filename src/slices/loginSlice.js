@@ -10,7 +10,7 @@ export const userLogin = createAsyncThunk(
         "http://localhost:4000/user-login",
         credentialsObj
       );
-
+      console.log(res.data);
       //if login success store the required values in local storage
       if (res.data.token) {
         localStorage.setItem("token", res.data.token);

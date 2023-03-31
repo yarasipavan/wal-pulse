@@ -5,9 +5,9 @@ import { Outlet } from "react-router-dom";
 function GdoRootLayout() {
   return (
     <div>
-      <TopNavbar />
+      <TopNavbar type="gdo" />
       <div className="container ">
-        <div className=" row">
+        <div className=" row mt-5">
           <Outlet />
         </div>
       </div>

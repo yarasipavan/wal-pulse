@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 function SuperAdminRootLayout() {
   return (
     <div>
-      <TopNavbar />
+      <TopNavbar type="super-admin" />
       <div className="container ">
         <div className=" row">
           <Outlet />

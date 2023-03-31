@@ -9,7 +9,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faUserPen, faTrash } from "@fortawesome/free-solid-svg-icons";
 
-function UserDetails({ users, getAllUsers }) {
+function UserDetails({ users, getAllUsers, getnewUsers }) {
   //state
   let [message, setMessage] = useState("");
   let [errorMessage, setErrorMessage] = useState("");
@@ -61,6 +61,7 @@ function UserDetails({ users, getAllUsers }) {
       //close the model
       closeModel();
       getAllUsers();
+      getnewUsers();
     } catch (err) {
       setErrorMessage(err.message);
     }
@@ -74,6 +75,7 @@ function UserDetails({ users, getAllUsers }) {
       { headers: { Authorization: `bearer ${token}` } }
     );
     getAllUsers();
+    getnewUsers();
   };
 
   return (
@@ -195,7 +197,6 @@ function UserDetails({ users, getAllUsers }) {
                         <option value="PROJECT-MANAGER">Project Manager</option>
                         <option value="GDO-HEAD"> GDO Head </option>
                         <option value="HR"> HR </option>
-                        <option value="ACCOUNT-MANAGER">Account Manager</option>
                         <option value="ADMIN-USER"> Admin User </option>
                         <option value="SUPER-ADMIN">Super Admin</option>
                       </select>

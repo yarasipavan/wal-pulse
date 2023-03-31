@@ -18,7 +18,7 @@ function Login() {
         navigate("/super-admin");
       } else if (user.user_type === "ADMIN-USER") {
         navigate("/admin-user");
-      } else if (user.user_type === "null") {
+      } else if (user.user_type === null) {
         navigate("/user");
       }
     }

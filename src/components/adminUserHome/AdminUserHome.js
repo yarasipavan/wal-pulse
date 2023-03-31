@@ -169,7 +169,7 @@ function AdminUserHome() {
       ) : errorMessage ? (
         errorMessage
       ) : (
-        <>
+        <div>
           <AddProject
             type={"admin-user"}
             gdoHeads={gdoHeads}
@@ -198,7 +198,7 @@ function AdminUserHome() {
               <GetResourceRequests />
             </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );

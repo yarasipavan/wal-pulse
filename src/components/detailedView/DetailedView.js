@@ -20,6 +20,7 @@ function DetailedView() {
 
   //state
   let [detailedView, setDetailedView] = useState(0);
+
   let [errorMessage, setErrorMessage] = useState("");
   let [bg, setBg] = useState("");
 
@@ -31,7 +32,7 @@ function DetailedView() {
   }, []);
 
   // get detailed view
-  useEffect(() => {
+  const getDetailedView = () => {
     //if token is not present redirect to login page
     if (token === null) navigate("/");
     //call the api
@@ -42,6 +43,7 @@ function DetailedView() {
       )
       .then((res) => {
         setDetailedView(res.data.payload);
+
         setErrorMessage("");
 
         //set style color
@@ -64,6 +66,10 @@ function DetailedView() {
           setErrorMessage(err.message);
         }
       });
+  };
+
+  useEffect(() => {
+    getDetailedView();
   }, []);
 
   return (
@@ -73,7 +79,7 @@ function DetailedView() {
       {errorMessage ? (
         <p className="text-danger fw-bold text-center">{errorMessage}</p>
       ) : (
-        <div className="row w-100 m-0">
+        <div className="row w-100 ">
           {/* top indicators */}
           <div className="row mx-auto ">
             <div className="col-12 col-md-4 col-lg-3 mx-auto mb-3 ">
@@ -123,7 +129,11 @@ function DetailedView() {
           <ProjectDetails detailedView={detailedView} />
 
           {/* team composition */}
-          <TeamComposition team_members={detailedView.team_members} />
+          <TeamComposition
+            team_members={detailedView.team_members}
+            type={state.type}
+            getDetailedView={getDetailedView}
+          />
 
           {/* Project Updates */}
           <ProjectUpdates project_updates={detailedView.project_updates} />
