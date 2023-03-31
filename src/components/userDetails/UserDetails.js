@@ -197,7 +197,6 @@ function UserDetails({ users, getAllUsers, getnewUsers }) {
                         <option value="PROJECT-MANAGER">Project Manager</option>
                         <option value="GDO-HEAD"> GDO Head </option>
                         <option value="HR"> HR </option>
-                        <option value="ACCOUNT-MANAGER">Account Manager</option>
                         <option value="ADMIN-USER"> Admin User </option>
                         <option value="SUPER-ADMIN">Super Admin</option>
                       </select>
