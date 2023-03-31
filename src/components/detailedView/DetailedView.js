@@ -20,6 +20,7 @@ function DetailedView() {
 
   //state
   let [detailedView, setDetailedView] = useState(0);
+
   let [errorMessage, setErrorMessage] = useState("");
   let [bg, setBg] = useState("");
 
@@ -31,7 +32,7 @@ function DetailedView() {
   }, []);
 
   // get detailed view
-  useEffect(() => {
+  const getDetailedView = () => {
     //if token is not present redirect to login page
     if (token === null) navigate("/");
     //call the api
@@ -42,6 +43,7 @@ function DetailedView() {
       )
       .then((res) => {
         setDetailedView(res.data.payload);
+
         setErrorMessage("");
 
         //set style color
@@ -64,6 +66,10 @@ function DetailedView() {
           setErrorMessage(err.message);
         }
       });
+  };
+
+  useEffect(() => {
+    getDetailedView();
   }, []);
 
   return (
@@ -126,6 +132,7 @@ function DetailedView() {
           <TeamComposition
             team_members={detailedView.team_members}
             type={state.type}
+            getDetailedView={getDetailedView}
           />
 
           {/* Project Updates */}
