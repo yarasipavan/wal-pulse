@@ -34,8 +34,12 @@ function ProjectManagerHome() {
           setFetched(1);
         })
         .catch((err) => {
+          if (err.response.status == 401) {
+            setErrorMessage(err.response.data.alertMsg);
+          } else {
+            setErrorMessage(err.message);
+          }
           setProjects([]);
-          setErrorMessage(err.message);
           setFetched(1);
         });
     }

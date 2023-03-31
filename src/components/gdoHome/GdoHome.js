@@ -64,8 +64,13 @@ function GdoHome() {
         setEmployeesFetched(1);
       })
       .catch((err) => {
+        if (err.response.status == 401) {
+          setErrorMessage(err.response.data.alertMsg);
+        } else {
+          setErrorMessage(err.message);
+        }
         setProjects([]);
-        setErrorMessage(err.message);
+
         setEmployeesFetched(1);
       });
   }, []);
@@ -81,7 +86,7 @@ function GdoHome() {
         errorMessage
       ) : (
         <div className="row ">
-          <div className="col-12 col-md-10 col-lg-8 mt-5 mx-auto">
+          <div className="col-12 col-md-10 col-lg-8  mx-auto">
             <div className="row ">
               <div className=" col">
                 <AllProjects type={"gdo"} projects={projects} />
@@ -103,7 +108,7 @@ function GdoHome() {
             </div>
           </div>
 
-          <div className="col-12 col-md-6 col-lg-4 mx-auto mt-5 ">
+          <div className="col-12 col-md-6 col-lg-4 mx-auto  ">
             <RaiseResourceRequest type={"gdo"} projects={projects} />
           </div>
         </div>

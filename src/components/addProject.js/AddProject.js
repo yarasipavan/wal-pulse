@@ -184,7 +184,7 @@ function AddProject({ type, gdoHeads, projectManagers, employees }) {
                     className="form-control"
                     {...register("fitness", { required: true })}
                   >
-                    <option value=""></option>
+                    <option value="">-- select fitness --</option>
                     <option value="green">Green</option>
                     <option value="amber">Amber</option>
                     <option value="red">Red</option>

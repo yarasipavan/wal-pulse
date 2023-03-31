@@ -93,7 +93,11 @@ function SuperAdminHome() {
           <div className="col col-12  col-lg-9  ">
             <div className="row">
               <div className="col   ">
-                <UserDetails users={users} getAllUsers={getAllUsers} />
+                <UserDetails
+                  users={users}
+                  getAllUsers={getAllUsers}
+                  getnewUsers={getnewUsers}
+                />
               </div>
             </div>
           </div>

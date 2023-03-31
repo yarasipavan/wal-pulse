@@ -5,7 +5,7 @@ import { Outlet } from "react-router-dom";
 function AdminUserRootLayout() {
   return (
     <div>
-      <TopNavbar />
+      <TopNavbar type="admin-user" />
       <div className="container mt-5 ">
         <div className=" row">
           <Outlet />

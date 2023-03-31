@@ -10,6 +10,7 @@ import SuperAdminHome from "./components/superAdminHome/SuperAdminHome";
 
 import DetailedView from "./components/detailedView/DetailedView";
 import AdminUserRootLayout from "./components/adminUserRootLayout/AdminUserRootLayout";
+import Profile from "./components/profile/Profile";
 import { lazy, Suspense } from "react";
 
 let GdoHome = lazy(() => import("./components/gdoHome/GdoHome"));
@@ -41,6 +42,10 @@ let ForgotPassword = lazy(() =>
 let ResetPassword = lazy(() =>
   import("./components/resetPassword/ResetPassword")
 );
+
+// let Profile=lazy(()=>{
+//   import ("./components/profile/Profile")
+// })
 
 function App() {
   const browserRouterObj = createBrowserRouter([
@@ -98,6 +103,10 @@ function App() {
           path: "detailed-view",
           element: <DetailedView />,
         },
+        {
+          path: "profile",
+          element: <Profile />,
+        },
       ],
     },
     {
@@ -120,6 +129,10 @@ function App() {
           path: "detailed-view",
           element: <DetailedView />,
         },
+        {
+          path: "profile",
+          element: <Profile />,
+        },
       ],
     },
     {
@@ -133,6 +146,10 @@ function App() {
         {
           path: "",
           element: <SuperAdminHome />,
+        },
+        {
+          path: "profile",
+          element: <Profile />,
         },
       ],
     },
@@ -152,11 +169,21 @@ function App() {
           path: "detailed-view",
           element: <DetailedView />,
         },
+        {
+          path: "profile",
+          element: <Profile />,
+        },
       ],
     },
     {
       path: "/user",
       element: <OtherUserRootLayout />,
+      children: [
+        {
+          path: "profile",
+          element: <Profile />,
+        },
+      ],
     },
   ]);
   return <RouterProvider router={browserRouterObj}></RouterProvider>;

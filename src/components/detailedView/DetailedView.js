@@ -73,7 +73,7 @@ function DetailedView() {
       {errorMessage ? (
         <p className="text-danger fw-bold text-center">{errorMessage}</p>
       ) : (
-        <div className="row w-100 m-0">
+        <div className="row w-100 ">
           {/* top indicators */}
           <div className="row mx-auto ">
             <div className="col-12 col-md-4 col-lg-3 mx-auto mb-3 ">
@@ -123,7 +123,10 @@ function DetailedView() {
           <ProjectDetails detailedView={detailedView} />
 
           {/* team composition */}
-          <TeamComposition team_members={detailedView.team_members} />
+          <TeamComposition
+            team_members={detailedView.team_members}
+            type={state.type}
+          />
 
           {/* Project Updates */}
           <ProjectUpdates project_updates={detailedView.project_updates} />

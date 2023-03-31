@@ -1,7 +1,11 @@
 import React from "react";
 import Table from "react-bootstrap/Table";
 
-function TeamComposition({ team_members }) {
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+
+function TeamComposition({ team_members, type }) {
+  console.log("team composition :", team_members);
   return (
     <div className="col-12" style={{ width: "100vw" }}>
       <div className="mt-5 border p-2">
@@ -18,6 +22,7 @@ function TeamComposition({ team_members }) {
               <th>Billing status</th>
               <th>Exposed to customer</th>
               <th>Allocation Type</th>
+              {type === "gdo" && <th>Edit</th>}
             </tr>
           </thead>
           <tbody style={{ fontSize: "0.9rem" }}>
@@ -31,6 +36,13 @@ function TeamComposition({ team_members }) {
                 <td>{memberObj.billing_status}</td>
                 <td>{memberObj.exposed_to_customer ? "Yes" : "No"}</td>
                 <td>{memberObj.allocation_type}</td>
+                {type === "gdo" && (
+                  <td>
+                    <button className="btn btn-warning">
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </button>
+                  </td>
+                )}
               </tr>
             ))}
           </tbody>

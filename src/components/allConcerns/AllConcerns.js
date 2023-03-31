@@ -68,7 +68,7 @@ function AllConcerns({ type }) {
           {fetched && !errorMessage && concerns.length === 0 ? (
             <p className="text-center text-danger fw-bold">No Concerns </p>
           ) : (
-            <Table responsive="sm" striped hover className="text-center">
+            <Table responsive="lg" striped hover className="text-center">
               <thead style={{ fontSize: "0.9rem" }}>
                 <tr>
                   <th>Concern Id</th>

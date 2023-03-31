@@ -110,7 +110,7 @@ function AllProjects({
                 Click at anywhere on the project details to get detailed view of
                 particular project
               </p>
-              <Table responsive="sm" striped hover className="text-center">
+              <Table responsive="lg" striped hover className="text-center">
                 <thead style={{ fontSize: "0.9rem" }}>
                   <tr>
                     <th>Project Id</th>

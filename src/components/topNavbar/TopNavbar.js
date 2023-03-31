@@ -1,4 +1,5 @@
 import React, { memo } from "react";
+import { NavItem } from "react-bootstrap";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
@@ -8,13 +9,20 @@ import { useNavigate } from "react-router-dom";
 
 import { logout } from "../../slices/loginSlice";
 
-function TopNavbar() {
+function TopNavbar({ type }) {
   let { user } = useSelector((store) => store.login);
   let dispatch = useDispatch();
   let navigate = useNavigate();
   const logoutUser = () => {
     dispatch(logout());
     navigate("/");
+  };
+  const home = () => {
+    navigate(`/${type}`);
+  };
+
+  const profile = () => {
+    navigate("profile");
   };
 
   return (
@@ -37,8 +45,9 @@ function TopNavbar() {
       <Navbar.Collapse id="responsive-navbar-nav">
         <Nav className="me-auto"></Nav>
         <Nav>
+          <Nav.Link onClick={home}>Home</Nav.Link>
           <NavDropdown title={user.email} id="collasible-nav-dropdown">
-            <NavDropdown.Item to="#">profile</NavDropdown.Item>
+            <NavDropdown.Item onClick={profile}>profile</NavDropdown.Item>
             <NavDropdown.Item onClick={logoutUser} to="/">
               logout
             </NavDropdown.Item>

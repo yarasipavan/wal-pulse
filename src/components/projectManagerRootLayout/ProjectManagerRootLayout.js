@@ -6,7 +6,7 @@ function ProjectManagerRootLayout() {
   return (
     <div>
       <div>
-        <TopNavbar />
+        <TopNavbar type="project-manager" />
 
         <div className=" container    mt-5   ">
           <Outlet />
