@@ -1,11 +1,11 @@
 import React, { memo } from "react";
-import { NavItem } from "react-bootstrap";
-import Container from "react-bootstrap/Container";
+
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import NavDropdown from "react-bootstrap/NavDropdown";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import logoImage from "../../images/wal-logo.svg";
 
 import { logout } from "../../slices/loginSlice";
 
@@ -35,10 +35,7 @@ function TopNavbar({ type }) {
       className="ps-3"
     >
       <Navbar.Brand href="#home">
-        <img
-          src="https://www.westagilelabs.com/wp-content/themes/west-agile-labs/assets/wal-logo.svg"
-          width={"20px"}
-        />
+        <img src={logoImage} width={"20px"} />
       </Navbar.Brand>
       <Navbar.Brand href="#home">WAL Pulse</Navbar.Brand>
       <Navbar.Toggle aria-controls="responsive-navbar-nav" />

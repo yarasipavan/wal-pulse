@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import axios from "axios";
 import { logout } from "../../slices/loginSlice";
 import { useDispatch } from "react-redux";
@@ -44,7 +44,7 @@ function ProjectManagerHome() {
         });
     }
   }, []);
-  console.log("projects in home", projects);
+  console.log("project manager home component redndering");
   return (
     <div className=" container ">
       {!fetched ? (
@@ -85,4 +85,4 @@ function ProjectManagerHome() {
   );
 }
 
-export default ProjectManagerHome;
+export default memo(ProjectManagerHome);

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, memo } from "react";
 import axios from "axios";
 import { useForm } from "react-hook-form";
 import { logout } from "../../slices/loginSlice";
@@ -50,7 +50,7 @@ function ProjectUpdateForm({ type, projects }) {
       }
     }
   };
-
+  console.log("project-update from component rendering");
   return (
     <div className=" mx-auto border rounded pt-3">
       <h4 className="text-center" style={{ color: "#4da484" }}>
@@ -184,4 +184,4 @@ function ProjectUpdateForm({ type, projects }) {
   );
 }
 
-export default ProjectUpdateForm;
+export default memo(ProjectUpdateForm);

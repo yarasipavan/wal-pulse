@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 import axios from "axios";
 import { logout } from "../../slices/loginSlice";
 import { useDispatch } from "react-redux";
@@ -9,7 +9,7 @@ import RaiseResourceRequest from "../raiseResourceRequest/RaiseResourceRequest";
 import AllConcerns from "../allConcerns/AllConcerns";
 import AddTeam from "../addTeam/AddTeam";
 
-function GdoHome() {
+function GdoHome({ notifyDanger, notifySuccess }) {
   let [projects, setProjects] = useState([]);
   let [employees, setEmployees] = useState([]);
 
@@ -39,12 +39,15 @@ function GdoHome() {
         setFetched(1);
       })
       .catch((err) => {
+        if (err.response.data.alertMsg) {
+          setErrorMessage(err.response.data.alertMsg);
+        } else {
+          setErrorMessage(err.message);
+        }
         setProjects([]);
-        setErrorMessage(err.message);
         setFetched(1);
       });
   }, []);
-  console.log("projects in home", projects);
 
   //get all employees
   useEffect(() => {
@@ -74,6 +77,8 @@ function GdoHome() {
         setEmployeesFetched(1);
       });
   }, []);
+
+  console.log("gdo home renders");
   return (
     <div className="">
       {!fetched && !employeesFetched ? (
@@ -97,19 +102,26 @@ function GdoHome() {
                 <AllConcerns type={"gdo"} />
               </div>
             </div>
-            <div className="row mt-5">
+            <div className="row mt-5 mb-lg-5">
               <div className="col">
                 <AddTeam
                   type={"gdo"}
                   projects={projects}
                   employees={employees}
+                  notifyDanger={notifyDanger}
+                  notifySuccess={notifySuccess}
                 />
               </div>
             </div>
           </div>
 
-          <div className="col-12 col-md-6 col-lg-4 mx-auto  ">
-            <RaiseResourceRequest type={"gdo"} projects={projects} />
+          <div className=" mt-5 mt-lg-0 col-12 col-md-6 col-lg-4 mx-auto mb-5 ">
+            <RaiseResourceRequest
+              type={"gdo"}
+              projects={projects}
+              notifyDanger={notifyDanger}
+              notifySuccess={notifySuccess}
+            />
           </div>
         </div>
       )}
@@ -117,4 +129,4 @@ function GdoHome() {
   );
 }
 
-export default GdoHome;
+export default memo(GdoHome);

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { Accordion } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import axios from "axios";
@@ -12,9 +12,6 @@ function AddTeam({ type, projects, employees }) {
   let [message, setMessage] = useState("");
   let [errorMessage, setErrorMessage] = useState("");
 
-  let token = localStorage.getItem("token");
-  console.log(token);
-
   let {
     register,
     formState: { errors },
@@ -25,6 +22,7 @@ function AddTeam({ type, projects, employees }) {
   let formData = [];
   //onsubmit handler
   const onSubmit = async (formData) => {
+    let token = localStorage.getItem("token");
     //add status active by default to form data
     formData.status = "active";
     //call api to send the request
@@ -56,6 +54,7 @@ function AddTeam({ type, projects, employees }) {
     }
   };
 
+  console.log("Add team renders");
   return (
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -205,4 +204,4 @@ function AddTeam({ type, projects, employees }) {
   );
 }
 
-export default AddTeam;
+export default memo(AddTeam);

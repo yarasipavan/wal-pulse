@@ -55,13 +55,17 @@ function ProjectDetails({ detailedView }) {
             <div className="col-12  col-md-6 col-lg-3 ">
               <p className="field-heading">
                 Start date:
-                <span className="filed-value">{detailedView.start_date}</span>
+                <span className="filed-value">
+                  {detailedView.start_date.split("T")[0]}
+                </span>
               </p>
             </div>
             <div className="col-12  col-md-6 col-lg-3 ">
               <p className="field-heading">
                 End date:
-                <span className="filed-value">{detailedView.end_date}</span>
+                <span className="filed-value">
+                  {detailedView.end_date?.split("T")[0]}
+                </span>
               </p>
             </div>
             <div className="col-12  col-md-6 col-lg-3 ">

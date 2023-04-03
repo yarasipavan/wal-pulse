@@ -25,10 +25,10 @@ function ProjectConcerns({ project_concerns }) {
               <td>{concernObj.id}</td>
               <td>{concernObj.concern_description}</td>
               <td>{concernObj.raised_by}</td>
-              <td>{concernObj.concern_raised_on}</td>
+              <td>{concernObj.concern_raised_on.split("T")[0]}</td>
               <td>{concernObj.severity}</td>
               <td>{concernObj.status}</td>
-              <td>{concernObj.waiting_for_client_inputs ? "Yes" : "No"}</td>
+              <td>{concernObj.is_concern_raised_internally ? "Yes" : "No"}</td>
               <td>{concernObj.mitigated_on ? concernObj.mitigated_on : "-"}</td>
             </tr>
           ))}

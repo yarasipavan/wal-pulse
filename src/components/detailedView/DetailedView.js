@@ -1,4 +1,4 @@
-import React from "react";
+import React, { memo } from "react";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -20,6 +20,7 @@ function DetailedView() {
 
   //state
   let [detailedView, setDetailedView] = useState(0);
+  let [fetched, setFetched] = useState(0);
 
   let [errorMessage, setErrorMessage] = useState("");
   let [bg, setBg] = useState("");
@@ -43,6 +44,7 @@ function DetailedView() {
       )
       .then((res) => {
         setDetailedView(res.data.payload);
+        setFetched(1);
 
         setErrorMessage("");
 
@@ -64,6 +66,7 @@ function DetailedView() {
           setErrorMessage(err.response.data.alertMsg);
         } else {
           setErrorMessage(err.message);
+          setFetched(1);
         }
       });
   };
@@ -72,11 +75,14 @@ function DetailedView() {
     getDetailedView();
   }, []);
 
+  console.log("detailed view renders");
   return (
     <div>
       <h4>Detailed view</h4>
 
-      {errorMessage ? (
+      {!fetched ? (
+        "loading ..."
+      ) : errorMessage ? (
         <p className="text-danger fw-bold text-center">{errorMessage}</p>
       ) : (
         <div className="row w-100 ">
@@ -132,7 +138,7 @@ function DetailedView() {
           <TeamComposition
             team_members={detailedView.team_members}
             type={state.type}
-            getDetailedView={getDetailedView}
+            detailedView={detailedView}
           />
 
           {/* Project Updates */}
@@ -146,4 +152,4 @@ function DetailedView() {
   );
 }
 
-export default DetailedView;
+export default memo(DetailedView);

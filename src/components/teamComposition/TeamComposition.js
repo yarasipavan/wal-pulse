@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Table from "react-bootstrap/Table";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -12,7 +12,8 @@ import Modal from "react-bootstrap/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 
-function TeamComposition({ team_members, type, getDetailedView }) {
+function TeamComposition({ team_members, type }) {
+  let [teamMembers, setTeamMembers] = useState([]);
   let navigate = useNavigate();
   let dispatch = useDispatch();
   let {
@@ -24,6 +25,7 @@ function TeamComposition({ team_members, type, getDetailedView }) {
     getValues,
   } = useForm();
 
+  console.log("team", teamMembers);
   //state
 
   let [errorMessage, setErrorMessage] = useState([]);
@@ -70,7 +72,7 @@ function TeamComposition({ team_members, type, getDetailedView }) {
       );
       //close the model
       reset();
-      getDetailedView();
+      setTeamMembers(res.data.updatedTeam);
       closeModel();
     } catch (err) {
       if (err.response.status == 401) {
@@ -82,6 +84,9 @@ function TeamComposition({ team_members, type, getDetailedView }) {
     }
   };
 
+  useEffect(() => {
+    setTeamMembers(team_members);
+  }, []);
   return (
     <div className="col-12" style={{ width: "100vw" }}>
       <div className="mt-5 border p-2">
@@ -102,7 +107,7 @@ function TeamComposition({ team_members, type, getDetailedView }) {
             </tr>
           </thead>
           <tbody style={{ fontSize: "0.9rem" }}>
-            {team_members?.map((memberObj) => (
+            {teamMembers?.map((memberObj) => (
               <tr key={memberObj.resource_id}>
                 <td>{memberObj.resource_id}</td>
                 <td>{memberObj.role}</td>
