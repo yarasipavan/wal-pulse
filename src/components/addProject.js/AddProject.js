@@ -1,13 +1,18 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, memo } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { logout } from "../../slices/loginSlice";
 import { useForm } from "react-hook-form";
 import Accordion from "react-bootstrap/Accordion";
-import sampleAdd from "./sample";
 
-function AddProject({ type, gdoHeads, projectManagers, employees }) {
+function AddProject({
+  type,
+  gdoHeads,
+  projectManagers,
+  employees,
+  addproject,
+}) {
   //states
   let { user } = useSelector((store) => store.login);
 
@@ -38,8 +43,10 @@ function AddProject({ type, gdoHeads, projectManagers, employees }) {
         formObj,
         { headers: { Authorization: `bearer ${token}` } }
       );
-      console.log(res.data);
+
       setMessage(res.data.message);
+      addproject(res.data.payload);
+
       setErrorMessage("");
       reset();
     } catch (err) {
@@ -54,6 +61,8 @@ function AddProject({ type, gdoHeads, projectManagers, employees }) {
       }
     }
   };
+
+  console.log("Add project component rendering");
   return (
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -281,4 +290,4 @@ function AddProject({ type, gdoHeads, projectManagers, employees }) {
   );
 }
 
-export default AddProject;
+export default memo(AddProject);

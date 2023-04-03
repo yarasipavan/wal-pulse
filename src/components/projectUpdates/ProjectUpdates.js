@@ -26,7 +26,7 @@ function ProjectUpdates({ project_updates }) {
               <td>{updateObj.quality_status}</td>
               <td>{updateObj.resourcing_status}</td>
               <td>{updateObj.schedule_status}</td>
-              <td>{updateObj.date}</td>
+              <td>{updateObj.date.split("T")[0]}</td>
 
               <td>{updateObj.waiting_for_client_inputs ? "Yes" : "No"}</td>
             </tr>

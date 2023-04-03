@@ -3,6 +3,7 @@ import TopNavbar from "../topNavbar/TopNavbar";
 import { Outlet } from "react-router-dom";
 
 function ProjectManagerRootLayout() {
+  console.log("project manager root layout rendering");
   return (
     <div>
       <div>

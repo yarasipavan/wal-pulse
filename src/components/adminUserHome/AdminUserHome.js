@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo, useCallback } from "react";
 import axios from "axios";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -148,6 +148,9 @@ function AdminUserHome() {
         });
     }
   };
+  const addproject = useCallback((newProject) => {
+    setProjects([newProject, ...projects]);
+  });
 
   useEffect(() => {
     getGdos();
@@ -155,6 +158,8 @@ function AdminUserHome() {
     getEmployees();
     getProjects();
   }, []);
+
+  console.log("admin user home page rendering");
   return (
     <div>
       {!managersFetched &&
@@ -175,6 +180,7 @@ function AdminUserHome() {
             gdoHeads={gdoHeads}
             projectManagers={projectManagers}
             employees={employees}
+            addproject={addproject}
           />
           <div className="row mt-5">
             <div className=" col-12 mx-auto">
@@ -195,7 +201,7 @@ function AdminUserHome() {
           </div>
           <div className="row mt-5">
             <div className="col-12 mx-auto">
-              <GetResourceRequests />
+              <GetResourceRequests type="admin-user" />
             </div>
           </div>
         </div>
@@ -204,4 +210,4 @@ function AdminUserHome() {
   );
 }
 
-export default AdminUserHome;
+export default memo(AdminUserHome);

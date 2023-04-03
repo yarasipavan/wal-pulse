@@ -19,7 +19,8 @@ function AllConcerns({ type }) {
   let [fetched, setFetched] = useState(0);
   let [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
+  //get all concerns
+  const getConcerns = () => {
     let token = localStorage.getItem("token");
     if (!user.user_type) {
       //logout completely
@@ -49,7 +50,13 @@ function AllConcerns({ type }) {
         setFetched(1);
       }
     }
+  };
+
+  useEffect(() => {
+    getConcerns();
   }, []);
+
+  console.log("All concerns renders");
   return (
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -74,6 +81,7 @@ function AllConcerns({ type }) {
                   <th>Concern Id</th>
                   <th>Project Id</th>
                   <th>Project Name</th>
+                  <th>GDO Head</th>
                   <th>Project manager</th>
                   <th>Concern Description</th>
                   <th>Severity</th>
@@ -88,6 +96,7 @@ function AllConcerns({ type }) {
                     <td>{concernObj.id}</td>
                     <td>{concernObj.project.project_id}</td>
                     <td>{concernObj.project.project_name}</td>
+                    <td>{concernObj.project.gdo_head_id}</td>
                     <td>{concernObj.project.project_manager_id}</td>
                     <td>{concernObj.concern_description}</td>
                     <td>{concernObj.severity}</td>
@@ -110,4 +119,4 @@ function AllConcerns({ type }) {
   );
 }
 
-export default AllConcerns;
+export default memo(AllConcerns);

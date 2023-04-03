@@ -141,8 +141,8 @@ function ProjectConcernForm({ type, projects }) {
             {...register("is_concern_raised_internally", { required: true })}
           >
             <option value=""> -- select option -- </option>
-            <option value="1"> Yes </option>
-            <option value="0"> No </option>
+            <option value={1}> Yes </option>
+            <option value={0}> No </option>
           </select>
           {errors.is_concern_raised_internally?.type === "required" && (
             <p className="text-danger">Please select option</p>

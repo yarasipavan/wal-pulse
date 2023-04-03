@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, memo } from "react";
 import { useForm } from "react-hook-form";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -70,4 +70,4 @@ function ForgotPassword() {
   );
 }
 
-export default ForgotPassword;
+export default memo(ForgotPassword);

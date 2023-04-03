@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { logout } from "../../slices/loginSlice";
 import Accordion from "react-bootstrap/Accordion";
 
-function GetResourceRequests() {
+function GetResourceRequests({ type }) {
   let navigate = useNavigate();
   let dispatch = useDispatch();
 
@@ -18,7 +18,7 @@ function GetResourceRequests() {
   let [fetched, setFetched] = useState(0);
   let [errorMessage, setErrorMessage] = useState("");
 
-  useEffect(() => {
+  const getResourceRequests = () => {
     let token = localStorage.getItem("token");
     if (!user.user_type) {
       //logout completely
@@ -27,28 +27,34 @@ function GetResourceRequests() {
     }
 
     //get requests
-    try {
-      axios
-        .get(`http://localhost:4000/admin-user/resource-requests`, {
-          headers: { Authorization: `Bearer ${token}` },
-        })
-        .then((res) => {
-          setRequests(res.data.payload);
-          setFetched(1);
-          setErrorMessage("");
-        });
-    } catch (err) {
-      if (err.response.status === "401") {
-        //logout completely and navigate to login
-        dispatch(logout());
-        navigate("/");
-      } else {
-        //set error message
-        setErrorMessage(err.message);
+
+    axios
+      .get(`http://localhost:4000/${type}/resource-requests`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setRequests(res.data.payload);
         setFetched(1);
-      }
-    }
+        setErrorMessage("");
+      })
+      .catch((err) => {
+        if (err.response.status === "401") {
+          //logout completely and navigate to login
+          dispatch(logout());
+          navigate("/");
+        } else {
+          //set error message
+          setErrorMessage(err.message);
+          setFetched(1);
+        }
+      });
+  };
+
+  useEffect(() => {
+    getResourceRequests();
   }, []);
+
+  console.log("get resource request ");
   return (
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -64,7 +70,7 @@ function GetResourceRequests() {
             </div>
           )}
           {errorMessage && <p>{errorMessage}</p>}
-          {fetched && !errorMessage && requests.length === 0 ? (
+          {fetched && !errorMessage && requests?.length === 0 ? (
             <p className="text-center text-danger fw-bold">
               No resource requests{" "}
             </p>
@@ -81,7 +87,7 @@ function GetResourceRequests() {
                 </tr>
               </thead>
               <tbody style={{ fontSize: "0.9rem" }}>
-                {requests.map((requestObj) => (
+                {requests?.map((requestObj) => (
                   <tr key={requestObj.request_id}>
                     <td>{requestObj.request_id}</td>
                     <td>{requestObj.project_id}</td>
@@ -101,4 +107,4 @@ function GetResourceRequests() {
   );
 }
 
-export default GetResourceRequests;
+export default memo(GetResourceRequests);

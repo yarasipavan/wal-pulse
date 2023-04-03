@@ -1,4 +1,4 @@
-import React, { useState, useEffect, memo } from "react";
+import React, { useState, memo } from "react";
 import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useForm } from "react-hook-form";
@@ -95,6 +95,8 @@ function AllProjects({
     }
   };
 
+  console.log("All projects renders");
+
   return (
     <Accordion defaultActiveKey="0">
       <Accordion.Item eventKey="0">
@@ -102,7 +104,7 @@ function AllProjects({
           <h4>Projects Portfolio</h4>
         </Accordion.Header>
         <Accordion.Body>
-          {projects.length === 0 ? (
+          {projects?.length === 0 ? (
             <p>No Projects</p>
           ) : (
             <>
@@ -127,7 +129,7 @@ function AllProjects({
                   </tr>
                 </thead>
                 <tbody style={{ fontSize: "0.9rem" }}>
-                  {projects.map((projectObj, index) => (
+                  {projects?.map((projectObj, index) => (
                     <tr key={index} style={{ cursor: "pointer" }}>
                       <td
                         onClick={() => {

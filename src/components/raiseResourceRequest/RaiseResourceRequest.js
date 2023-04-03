@@ -4,11 +4,12 @@ import { useForm } from "react-hook-form";
 import { logout } from "../../slices/loginSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
 
-function RaiseResourceRequest({ type, projects }) {
+function RaiseResourceRequest({ type, projects, notifyDanger, notifySuccess }) {
   let dispatch = useDispatch();
   let navigate = useNavigate();
-  let token = localStorage.getItem("token");
+
   let [errorMessage, setErrorMessage] = useState("");
   let [message, setMessage] = useState("");
 
@@ -21,6 +22,7 @@ function RaiseResourceRequest({ type, projects }) {
 
   // function to handle submit
   const onSubmit = async (formObj) => {
+    let token = localStorage.getItem("token");
     //add date to formObj
     formObj.request_on = new Date();
 
@@ -35,6 +37,7 @@ function RaiseResourceRequest({ type, projects }) {
       );
 
       setMessage(res.data.message);
+      toast.success(res.data.message);
       setErrorMessage("");
       reset();
     } catch (err) {
@@ -44,11 +47,13 @@ function RaiseResourceRequest({ type, projects }) {
         navigate("/");
       } else {
         setErrorMessage(err.response?.data?.alertMsg || err.message);
+        toast.error(err.response?.data?.alertMsg || err.message);
         setMessage("");
       }
     }
   };
 
+  console.log("raise Resource request renders");
   return (
     <div className=" mx-auto border rounded pt-3">
       <h4 className="text-center" style={{ color: "#4da484" }}>
@@ -102,6 +107,7 @@ function RaiseResourceRequest({ type, projects }) {
       <div className="mt-3">
         <p className="text-success text-center fw-bold">{message}</p>
       </div>
+      <ToastContainer />
     </div>
   );
 }

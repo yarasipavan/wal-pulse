@@ -7,11 +7,11 @@ import Login from "./components/login/Login";
 
 import OtherUserRootLayout from "./components/otherUserRootLayout/OtherUserRootLayout";
 import SuperAdminHome from "./components/superAdminHome/SuperAdminHome";
-
 import DetailedView from "./components/detailedView/DetailedView";
 import AdminUserRootLayout from "./components/adminUserRootLayout/AdminUserRootLayout";
 import Profile from "./components/profile/Profile";
 import { lazy, Suspense } from "react";
+import ErrorPage from "./components/errorPage/ErrorPage";
 
 let GdoHome = lazy(() => import("./components/gdoHome/GdoHome"));
 let ProjectManagerHome = lazy(() =>
@@ -52,6 +52,7 @@ function App() {
     {
       path: "/",
       element: <PublicRootLayout />,
+      errorElement: <ErrorPage />,
       children: [
         {
           path: "/",

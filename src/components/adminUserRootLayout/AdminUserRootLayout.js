@@ -1,6 +1,8 @@
-import React from "react";
+import React, { memo } from "react";
 import TopNavbar from "../topNavbar/TopNavbar";
 import { Outlet } from "react-router-dom";
+
+console.log("admin user root layout component rendering");
 
 function AdminUserRootLayout() {
   return (
@@ -15,4 +17,4 @@ function AdminUserRootLayout() {
   );
 }
 
-export default AdminUserRootLayout;
+export default memo(AdminUserRootLayout);
